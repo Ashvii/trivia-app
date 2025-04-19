@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+.heading h1{
+    font-family: "Covered By Your Grace", cursive;
+}
+.heading img{
+    background-color: wheat;
+}
