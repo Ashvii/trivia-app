@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 export default function Trivia( {
-    data , setStop ,questionNumber,setQuestionNumber
+    data , setStop ,questionNumber,setQuestionNumber , fiftyFiftyAnswers
 }) 
 
 {
@@ -42,12 +42,24 @@ export default function Trivia( {
 
   return (
     <div className="trivia">
-      <div className="question">{question?.question}</div>
+      <div className="question ">{question?.question}</div>
       <div className="answers">
 
-        {question?.answers.map((a,index) => (
-            <div key={index} className={selectedAnswer  === a? className:"answer"} onClick={()=>handleClick(a)}>{a.text}</div>
-        ))}
+      {question?.answers.map((a, index) => {
+  const isFiftyFiftyHidden = fiftyFiftyAnswers.length > 0 && fiftyFiftyAnswers.includes(a.text);
+  if (isFiftyFiftyHidden) return null;
+
+  return (
+    <div
+      key={index}
+      className={selectedAnswer === a ? className : "answer"}
+      onClick={() => handleClick(a)}
+    >
+      {a.text}
+    </div>
+  );
+})}
+
      
       </div>
     </div>

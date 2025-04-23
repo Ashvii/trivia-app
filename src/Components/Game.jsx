@@ -9,6 +9,11 @@ function Game() {
     const [earned, setEarned] = useState("level 1")
 
 
+    const [usedFiftyFifty, setUsedFiftyFifty] = useState(false);
+    const [usedSkip, setUsedSkip] = useState(false);
+    const [fiftyFiftyAnswers, setFiftyFiftyAnswers] = useState([]);
+
+
 
     const data = [
         {
@@ -209,10 +214,10 @@ function Game() {
                 },
             ],
         },
-        
+
     ];
 
-    const LevelPyramid = useMemo(()=>
+    const LevelPyramid = useMemo(() =>
         [
             { id: 1, level: "level 1" },
             { id: 2, level: "level 2" },
@@ -223,19 +228,24 @@ function Game() {
             { id: 7, level: "level 7" },
             { id: 8, level: "level 8" },
             { id: 9, level: "level 9" },
-        ].reverse(),[]);
+        ].reverse(), []);
 
-        useEffect(() => {
-            questionNumber > 1 &&
-              setEarned(LevelPyramid.find((m) => m.id === questionNumber - 1).level);
-          }, [questionNumber,LevelPyramid]);
+    useEffect(() => {
+        questionNumber > 1 &&
+            setEarned(LevelPyramid.find((m) => m.id === questionNumber - 1).level);
+    }, [questionNumber, LevelPyramid]);
 
-          useEffect(() => {
-            if (questionNumber > 9) {
-                setStop(true);  // End the game
-            }
-        }, [questionNumber]);
+    useEffect(() => {
+        if (questionNumber > 9) {
+            setStop(true);  // End the game
+        }
+    }, [questionNumber]);
 
+
+    const shuffledData = useMemo(() => {
+        return [...data].sort(() => Math.random() - 0.5);
+      }, []);
+      
     return (
         <div className='app flex' style={{ height: '100vh' }}>
 
@@ -247,10 +257,44 @@ function Game() {
                             <>
                                 <div className="top h-[42%] relative">
                                     <div className="timer absolute bottom-[10px] left-[240px] w-[100px] h-[100px] rounded-full border-4 border-white flex items-center justify-center text-[40px] font-bold">
-                                        <Timer setStop={setStop} questionNumber={questionNumber}/> 
-                                        </div>
+                                        <Timer setStop={setStop} questionNumber={questionNumber} />
+                                    </div>
                                 </div>
-                                <div className="bottom"><Trivia data={data} setStop={setStop} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} /></div>
+
+                                <div className="lifelines flex gap-4 p-4 justify-center">
+                                    <button
+                                        onClick={() => {
+                                            if (!usedFiftyFifty && !stop) {
+                                                const currentQ = shuffledData[questionNumber - 1];
+                                                const incorrect = currentQ.answers.filter(a => !a.correct);
+                                                const remaining = incorrect.sort(() => 0.5 - Math.random()).slice(0, 2);
+                                                setFiftyFiftyAnswers([...remaining.map(a => a.text)]);
+                                                setUsedFiftyFifty(true);
+                                            }
+                                        }}
+                                        disabled={usedFiftyFifty || stop}
+                                        className="btn btn-blue border rounded-xl p-3 shadow bg-blue-500 text-white"
+                                    >
+                                        50:50
+                                    </button>
+
+                                    <button
+                                        onClick={() => {
+                                            if (!usedSkip && !stop) {
+                                                setUsedSkip(true);
+                                                setQuestionNumber(prev => prev + 1);
+                                            }
+                                        }}
+                                        disabled={usedSkip || stop}
+                                        className="btn btn-green  border rounded-xl p-3 shadow bg-blue-500 text-white"
+                                    >
+                                        Skip
+                                    </button>
+                                </div>
+
+
+                                <div className="bottom"><Trivia  data={shuffledData} setStop={setStop} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} fiftyFiftyAnswers={fiftyFiftyAnswers}
+                                /></div>
                             </>
                         )
                 }
