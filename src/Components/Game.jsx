@@ -244,19 +244,30 @@ function Game() {
 
     const shuffledData = useMemo(() => {
         return [...data].sort(() => Math.random() - 0.5);
-      }, []);
-      
+    }, []);
+
+    const handleRestart = () => {
+        setQuestionNumber(1);
+        setStop(false);
+        setEarned("level 1");
+    };
+
     return (
         <div className='app flex' style={{ height: '100vh' }}>
 
 
             <div className="main flex flex-col">
                 {
-                    stop ? (<h1 className='endText'>You reached :{earned} </h1>) :
+                    stop ? (<div className="endTextContainer">
+                        <h1 className="endText">You reached: {earned}</h1>
+                        <button className="restartButton" onClick={handleRestart}>
+                            Restart
+                        </button>
+                    </div>) :
                         (
                             <>
                                 <div className="top h-[42%] relative">
-                                    <div className="timer absolute bottom-[10px] left-[240px] w-[100px] h-[100px] rounded-full border-4 border-white flex items-center justify-center text-[40px] font-bold">
+                                    <div className="timer absolute w-[100px] h-[100px] rounded-full border-4 border-white flex items-center justify-center text-[40px] font-bold">
                                         <Timer setStop={setStop} questionNumber={questionNumber} />
                                     </div>
                                 </div>
@@ -273,7 +284,7 @@ function Game() {
                                             }
                                         }}
                                         disabled={usedFiftyFifty || stop}
-                                        className="btn btn-blue border rounded-xl p-3 shadow bg-blue-500 text-white"
+                                        className="btn btn-blue border rounded-xl p-3 shadow bg-black text-white"
                                     >
                                         50:50
                                     </button>
@@ -286,14 +297,14 @@ function Game() {
                                             }
                                         }}
                                         disabled={usedSkip || stop}
-                                        className="btn btn-green  border rounded-xl p-3 shadow bg-blue-500 text-white"
+                                        className="btn btn-green  border rounded-xl p-3 shadow bg-black text-white"
                                     >
                                         Skip
                                     </button>
                                 </div>
 
 
-                                <div className="bottom"><Trivia  data={shuffledData} setStop={setStop} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} fiftyFiftyAnswers={fiftyFiftyAnswers}
+                                <div className="bottom"><Trivia data={shuffledData} setStop={setStop} questionNumber={questionNumber} setQuestionNumber={setQuestionNumber} fiftyFiftyAnswers={fiftyFiftyAnswers}
                                 /></div>
                             </>
                         )
@@ -304,10 +315,11 @@ function Game() {
 
 
             <div className="pyramid ">
-                <ul className='levellist'>
+                <ul className='levellist  pr-3 pl-3'>
                     {LevelPyramid.map((m) => (
 
-                        <li key={m.id} className={questionNumber == m.id ? 'levellistitem text-[20px]  d-flex items-center justify-center p-5 mb-2 mt-1' : 'levellistitem text-[20px]  d-flex items-center justify-center p-5 mb-2 mt-1 active'}>
+                        <li key={m.id} className={questionNumber == m.id ? "levellistitem text-white text-[20px] d-flex items-center justify-center p-5  mb-2 mt-1"
+                            : "levellistitem text-white  text-[20px] d-flex items-center justify-center p-5 mb-2 mt-1 active"}>
                             <span className='m-5'>{m.id}.</span>
                             <span className='m-3'>{m.level}</span>
                         </li>

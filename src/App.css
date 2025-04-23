@@ -1,13 +1,47 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap');
 
-.heading h1{
-    font-family: "Covered By Your Grace", cursive;
-}
-.heading img{
-    background-color: wheat;
+.font-grace {
+  font-family: "Covered By Your Grace", cursive;
 }
 
-.app{
+/* Animation for dice image */
+.heading img {
+  position: relative;
+  background-color: wheat;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-delay: 2s;
+}
+
+/* Movement animation */
+@keyframes example {
+  0%   { left: 0px; top: 0px; }
+  25%  { left: 50px; top: 0px; }
+  50%  { left: 50px; top: 50px; }
+  75%  { left: 0px; top: 50px; }
+  100% { left: 0px; top: 0px; }
+}
+
+/* Extra: Responsive tweaks for iPhone 12 Pro width (390px) */
+@media (max-width: 400px) {
+  .heading h1 {
+    font-size: 40px;
+  }
+
+  .heading img {
+    width: 150px;
+    height: 170px;
+  }
+
+  .btn button {
+    font-size: 20px;
+    padding: 12px;
+    border-radius: 30px;
+  }
+}
+
+/* .app{
     background-color: wheat;
 }
 .main{
@@ -34,7 +68,7 @@
 .question{
     width: 80%;
     background-color: aqua;
-    border:  5px;
+    border:  2px;
     text-align: center;
     padding: 20px;
     border-radius: 10px;
@@ -102,3 +136,322 @@
     right: 0;
     margin: auto;
 }
+ */
+
+ /* app.css */
+
+/* General Layout */
+/* app.css */
+
+.app {
+    background-image: url("https://cdn.pixabay.com/photo/2022/03/15/08/23/school-supplies-7069763_1280.jpg");
+    background-color: wheat;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+  }
+  
+  @media (max-width: 430px) {
+    .app {
+      flex-direction: column;
+      height: auto;
+    }
+  }
+  
+  .main {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  @media (max-width: 430px) {
+    .main {
+      width: 100%;
+      order: 1;
+    }
+  }
+  
+  .pyramid {
+    width: 25%;
+    background-color: wheat;
+  }
+  
+  @media (max-width: 430px) {
+    .pyramid {
+      width: 100%;
+      order: 3;
+    }
+  }
+  
+  .levellistitem.active {
+    background-color: black;
+    color: white;
+  }
+  
+  .levellistitem {
+    border-radius: 5px;
+    border: 1px solid black;
+    text-align: center;
+    background-color: wheat;
+    color: black;
+  }
+  
+  .trivia {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  @media (max-width: 430px) {
+    .trivia {
+      padding: 0.5rem;
+    }
+  }
+  
+  .question {
+    width: 80%;
+    background-color: black;
+    color: white;
+    border: none;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    border: 1px solid white;
+  }
+  
+  .answers {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 10px;
+  }
+  
+  .answer {
+    width: 40%;
+    padding: 10px;
+    text-align: center;
+    background-color: black;
+    border: 1px solid white;
+    font-size: 20px;
+    font-weight: 300;
+    border-radius: 20px;
+    margin: 0 10px 20px 10px;
+    color: white;
+  }
+  
+  .answer:hover,
+  .answer.active {
+    background: white;
+    color: black;
+  }
+  
+  .answer.correct {
+    animation: correct 3s ease forwards;
+  }
+  
+  @keyframes correct {
+    0%, 22%, 42% {
+      background: white;
+      color: black;
+    }
+    20%, 40%, 60% {
+      background: black;
+      color: white;
+    }
+    62%, 100% {
+      background: green;
+      color: white;
+    }
+  }
+  
+  .answer.wrong {
+    animation: wrong 3s ease forwards;
+  }
+  
+  @keyframes wrong {
+    0%, 22%, 42% {
+      background: white;
+      color: black;
+    }
+    20%, 40%, 60% {
+      background: black;
+      color: white;
+    }
+    62%, 100% {
+      background: crimson;
+      color: white;
+    }
+  }
+  
+  .endText {
+    position: relative;
+    margin: auto;
+    text-align: center;
+    font-size: 24px;
+    color: black;
+  }
+  
+  .timer {
+    position: absolute;
+    bottom: 10px;
+    left: 520px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+    background-color:transparent;
+    color: white;
+  }
+  
+  @media (max-width: 430px) {
+    .top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      position: relative;
+      order: 0;
+    }
+  
+    .timer {
+      position: static;
+      margin: 0 auto;
+    }
+  
+    .bottom {
+      order: 1;
+    }
+  
+    .pyramid {
+      order: 2;
+    }
+  }
+  
+  .restartButton {
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 60%;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .restartButton:hover {
+    background-color: gray;
+  }
+  
+  .endTextContainer {
+    text-align: center;
+    padding: 20px;
+    background-color: wheat;
+  }
+  
+  .endText {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: black;
+  }
+  
+  /* iPhone 12 Pro (390px width) specific */
+  @media (max-width: 390px) {
+    .main {
+      width: 100%;
+    }
+  
+    .top {
+      height: 30%;
+      margin-top: 10px;
+    }
+  
+    .timer {
+      width: 90px;
+      height: 90px;
+      font-size: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  
+    .bottom {
+      margin-top: 20px;
+    }
+  
+    .restartButton {
+      width: 80%;
+      font-size: 18px;
+    }
+  
+    .levellistitem {
+      font-size: 18px;
+      padding: 5px 10px;
+    }
+  
+    .question {
+      font-size: 18px;
+      padding: 15px;
+    }
+  
+    .answer {
+      width: 90%;
+      font-size: 18px;
+      padding: 12px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .main {
+      width: 100%;
+    }
+  
+    .pyramid {
+      width: 100%;
+      margin-top: 20px;
+    }
+  
+    .timer {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  
+  .endTextContainer{
+    background-image: url("https://cdn.pixabay.com/photo/2022/03/15/08/23/school-supplies-7069763_1280.jpg");
+    
+  }
+  .endText{
+    color: white;
+  }
+  .restartButton{
+    border: 1px solid white;
+  }
+
+  .pyramid{
+    background-image: url("https://cdn.pixabay.com/photo/2022/03/15/08/23/school-supplies-7069763_1280.jpg");
+    color: white;
+    
+    
+  }
+  .levellistitem{
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+  }
